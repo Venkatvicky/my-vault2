@@ -18,10 +18,13 @@ spec:
         env:
         - name: POSTGRES_USER
           value: "vault"
-        - name: POSTGRES_PASSWORD
-          value: "vaultpassword"
         - name: POSTGRES_DB
           value: "vault"
+        - name: POSTGRES_PASSWORD
+          valueFrom:                # Use a Kubernetes secret for safety
+              secretKeyRef:
+                name: vault-db-credentials
+                key: password
         ports:
         - containerPort: 5432
         volumeMounts:
