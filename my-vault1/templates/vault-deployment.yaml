@@ -18,21 +18,9 @@ spec:
         ports:
         - containerPort: 8200
         volumeMounts:
-        - name: vault-config
+        - name: vault-storage
           mountPath: /vault/config
-        env:
-        - name: VAULT_ADDR
-          value: "http://0.0.0.0:8200"
-        - name: VAULT_LOCAL_CONFIG
-          value: |
-            storage "postgresql" {
-              connection_url = "postgresql://vault:vaultpassword@postgres:5432/vault"
-            }
-            listener "tcp" {
-              address = "0.0.0.0:8200"
-              tls_disable = 1
-            }
       volumes:
-      - name: vault-config
-        configMap:
-          name: vault-config
+      - name: vault-storage
+        persistentVolumeClaim:
+          claimName: vault-pvc
