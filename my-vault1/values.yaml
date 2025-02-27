@@ -1,0 +1,12 @@
+postgresql:
+  username: vault
+  password: vaultpassword
+  database: vault
+  servicePort: 5432
+  storageSize: 1Gi
+
+vault:
+  image: hashicorp/vault:latest
+  servicePort: 8200
+  storage:
+    connection_url: "postgresql://vault:vaultpassword@postgres:5432/vault"
